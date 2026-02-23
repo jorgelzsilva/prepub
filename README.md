@@ -39,8 +39,17 @@ git clone https://github.com/jorgelzsilva/prepub.git
 cd prepub
 ```
 
-### 2. Criando o Ambiente Virtual (Windows WSL ou Linux)
-Crie o ambiente chamado `prepub` e ative-o:
+### 2. Criando e Ativando o Ambiente Virtual
+
+Crie o ambiente chamado `prepub` e ative-o conforme o seu sistema operacional:
+
+**No Windows (Prompt de Comando ou PowerShell):**
+```cmd
+python -m venv prepub
+prepub\Scripts\activate
+```
+
+**No Linux ou Windows WSL:**
 ```bash
 python3 -m venv prepub
 source prepub/bin/activate
