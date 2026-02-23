@@ -1,0 +1,24 @@
+# Ignorar ambientes virtuais do python
+prepub/
+venv/
+env/
+.env
+
+# Ignorar o diretório dinâmico de uploads e dados de processamento do Flask
+uploads/
+
+# Ignorar binários e pacotes compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar formatos de arquivos temporários ou de pacotes da máquina que não devem ir pro repo base
+*.pdf
+*.docx
+*.zip
+*.rar
+*.tar.gz
+
+# IDEs
+.vscode/
+.idea/

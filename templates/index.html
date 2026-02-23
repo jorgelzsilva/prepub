@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL PREPUB :: VALIDADOR</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="scanline"></div>
+    <div class="crt-overlay"></div>
+
+    <main class="container">
+        <header style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h1>SYS.PREPUB_VALIDATOR_v2.0</h1>
+                <p class="subtitle" id="status-subtitle">AGUARDANDO INSERÇÃO DE ARQUIVOS...</p>
+            </div>
+            <button id="btn-trash" class="btn-secondary" style="border: none; font-size: 1.5rem; color: var(--error);"
+                title="Limpar Servidor">[ 🗑️ ]</button>
+        </header>
+
+        <section id="upload-zone" class="drop-zone">
+            <div class="zone-content">
+                <span class="icon">[+]</span>
+                <p>ARRASTE ARQUIVOS ZIP/PDF/DOCX AQUI</p>
+                <div class="btn-group">
+                    <button id="btn-select-folder" class="btn-primary">SELECIONAR PASTA</button>
+                    <button id="btn-select-files" class="btn-secondary">SELECIONAR ARQUIVOS</button>
+                </div>
+                <input type="file" id="file-input-folder" multiple webkitdirectory directory style="display: none;">
+                <input type="file" id="file-input-files" multiple accept=".zip,.pdf,.docx" style="display: none;">
+            </div>
+        </section>
+
+        <!-- New Config Zone (shown after files are extracted on server) -->
+        <section id="config-zone" class="hidden drop-zone" style="border-color: var(--text-primary);">
+            <div class="zone-content">
+                <span class="icon">[*]</span>
+                <h2 id="files-count-msg" style="margin-bottom: 1rem; color: var(--text-primary);">0 ARQUIVOS
+                    IDENTIFICADOS</h2>
+
+                <div id="file-list-preview"
+                    style="text-align: left; background: rgba(0,0,0,0.5); padding: 1rem; margin-bottom: 1rem; max-height: 150px; overflow-y: auto; font-size: 0.9rem; color: var(--text-muted); border: 1px solid var(--border-color);">
+                    <!-- Extracted files listed here remotely -->
+                </div>
+
+                <div class="input-group" style="margin: 2rem 0;">
+                    <label for="texto-remover" style="display: block; margin-bottom: 0.5rem; color: var(--text-dim);">>>
+                        [OPCIONAL] TEXTO A REMOVER DO NOME (LIMPANOME)</label>
+                    <input type="text" id="texto-remover" placeholder="Ex: Print_previa-"
+                        style="padding: 0.8rem; width: 80%; max-width: 400px; background: rgba(0,0,0,0.5); border: 1px solid var(--text-dim); color: var(--text-primary); font-family: var(--font-mono); text-align: center; font-size: 1.1rem;">
+                </div>
+
+                <div class="btn-group">
+                    <button id="btn-start" class="btn-primary">>> INICIAR VALIDAÇÃO OCR E ESTRUTURAL</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="terminal" class="hidden">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="title">sequencia_de_boot.sh</span>
+            </div>
+            <div class="terminal-body" id="log-output">
+                <!-- Logs will be appended here -->
+            </div>
+        </section>
+
+        <section id="results-panel" class="hidden">
+            <div class="results-header">
+                <h2>>> RELATÓRIO_FINAL.DAT</h2>
+                <div style="margin-left:auto; display:flex; gap: 1rem;">
+                    <a id="btn-download" href="#" class="btn-primary btn-pulse" style="text-decoration: none;">[↓]
+                        BAIXAR
+                        ARQUIVOS PROCESSADOS</a>
+                    <button id="btn-reset" class="btn-primary" style="margin-left: 1rem;">[R] NOVA VALIDAÇÃO</button>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--text-primary);">> PAGINAÇÃO (PDF/DOCX)</h3>
+            <div class="table-container" style="margin-bottom: 2rem;">
+                <table id="results-table">
+                    <thead>
+                        <tr>
+                            <th>[ STATUS ]</th>
+                            <th>[ PAGINAÇÃO ]</th>
+                            <th>[ ARQUIVOS DETECTADOS ]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Results injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; color: var(--warning);">> VALIDAR-DOCX (ESTRUTURA)</h3>
+            <div class="table-container">
+                <table id="results-docx-table">
+                    <thead>
+                        <tr>
+                            <th>[ STATUS ]</th>
+                            <th>[ DOCX ]</th>
+                            <th>[ DETALHES ]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-docx-tbody">
+                        <!-- DOCX Results injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="errors-panel" class="hidden error-box">
+                <h3>[!] ALERT: FALHA NA EXTRAÇÃO OCR / SEM PADRÃO LIDO</h3>
+                <ul id="error-list"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

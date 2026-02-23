@@ -1,0 +1,376 @@
+:root {
+    --bg-color: #0a0a0a;
+    --panel-bg: #121212;
+    --text-primary: #00ff41;
+    --text-dim: #008f11;
+    --text-muted: #4d4d4d;
+    --error: #ff003c;
+    --warning: #fce205;
+    --success: #00ff41;
+    --border-color: #333;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding: 2rem;
+}
+
+/* CRT Effects */
+.scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 9999;
+    position: fixed;
+    pointer-events: none;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 65, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    top: 0;
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        top: -100px;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    z-index: 9998;
+    opacity: 0.15;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+header {
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.subtitle {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Upload Zone */
+.drop-zone {
+    border: 2px dashed var(--text-dim);
+    background: rgba(0, 255, 65, 0.05);
+    padding: 4rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.drop-zone.dragover {
+    background: rgba(0, 255, 65, 0.15);
+    border-color: var(--success);
+    transform: scale(1.01);
+}
+
+.drop-zone .icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.drop-zone p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+button,
+.btn-primary,
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--text-primary);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover,
+.btn-primary:hover {
+    background: var(--text-primary);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+}
+
+.btn-pulse {
+    animation: btnPulse 2s infinite;
+    border-color: var(--success);
+    color: var(--success);
+}
+
+@keyframes btnPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 255, 65, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 65, 0);
+    }
+}
+
+.btn-secondary {
+    border-color: var(--text-dim);
+    color: var(--text-dim);
+}
+
+.btn-secondary:hover {
+    background: var(--text-dim);
+    border-color: var(--text-dim);
+}
+
+/* Terminal */
+#terminal {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+    background: #222;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red {
+    background: var(--error);
+}
+
+.dot.yellow {
+    background: var(--warning);
+}
+
+.dot.green {
+    background: var(--success);
+}
+
+.terminal-header .title {
+    color: var(--text-muted);
+    margin-left: 1rem;
+    font-size: 0.9rem;
+}
+
+.terminal-body {
+    height: 350px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.log-line {
+    margin-bottom: 0.4rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.log-line.error {
+    color: var(--error);
+}
+
+.log-line.warning {
+    color: var(--warning);
+}
+
+/* Results */
+#results-panel {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: bold;
+    color: var(--text-dim);
+}
+
+tr:hover {
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.status-ok {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.status-duplo {
+    color: var(--warning);
+    font-weight: bold;
+}
+
+.status-falhou {
+    color: var(--error);
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.file-tag {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    border: 1px solid var(--text-dim);
+    font-size: 0.85rem;
+}
+
+.file-tag.pdf {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.file-tag.docx {
+    border-color: var(--text-primary);
+}
+
+.error-box {
+    margin-top: 2rem;
+    border: 1px dashed var(--error);
+    padding: 1.5rem;
+    color: var(--error);
+}
+
+.error-box h3 {
+    margin-bottom: 1rem;
+}
+
+.error-box ul {
+    list-style-type: square;
+    padding-left: 2rem;
+}
